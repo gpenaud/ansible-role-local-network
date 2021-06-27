@@ -1,0 +1,24 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: gpeanuts
+  description: A role to deploy local network through dnsmasq and linux bridges
+  company: "gpenauts corp."
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.4
+  platforms:
+  - name: EL
+    versions:
+    - all
+  - name: Debian
+    versions:
+    - all
+  - name: Ubuntu
+    versions:
+    - all
+  galaxy_tags:
+    - dnsmasq
+    - linux_bridge
+    - network
+    - infrastructure
