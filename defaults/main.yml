@@ -1,0 +1,5 @@
+---
+
+local_network_nameserver: 127.0.0.1
+local_network_interfaces:
+- wlp58s0  

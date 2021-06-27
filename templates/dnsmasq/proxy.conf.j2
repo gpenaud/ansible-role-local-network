@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+
+interface=lo
+bind-dynamic
+
+cache-size=0
+no-negcache
+
+{% for interface in interfaces.values() %}
+server=/{{ interface.domain }}/{{ interface.dns_server }}
+{% endfor %}
+server=/#/8.8.8.8

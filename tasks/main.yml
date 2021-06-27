@@ -1,0 +1,4 @@
+---
+
+- name: include install part of local-network role
+  include: install.yml

@@ -1,0 +1,14 @@
+---
+
+- name: restart dnsmasq proxy
+  become: yes
+  systemd:
+    name: dnsmasq@_proxy
+    state: restarted
+
+- name: restart dnsmasq instances
+  become: yes
+  loop: "{{ dnsmasq_instances.results | selectattr('changed', 'equalto', true) | map(attribute='item') | map(attribute='value') | map(attribute='name') | list }}"
+  systemd:
+    name: dnsmasq@{{ item }}
+    state: restarted

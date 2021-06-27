@@ -1,0 +1,21 @@
+# {{ ansible_managed }}
+
+{% set interface = item.value %}
+interface={{ interface.name }}
+bind-dynamic
+
+domain={{ interface.domain }}
+{% for cname_key, cname_values in interface.dns_cnames.items() %}
+cname={{ cname_key }},{{ cname_values | join(",") }}
+{% endfor %}
+cache-size={{ interface.cache_size | default(0) }}
+
+dhcp-leasefile=/tmp/dhcp-leases-{{ interface.name }}
+dhcp-range={{ interface.dhcp_range }}
+dhcp-option=option:netmask,{{ interface.netmask }}
+dhcp-option=option:router,{{ interface.router }}
+dhcp-option=option:dns-server,{{ interface.dns_server }}
+dhcp-option=option:domain-name,{{ interface.domain }}
+
+server=/{{ interface.domain }}/{{ interface.dns_server }}
+server=/#/8.8.8.8

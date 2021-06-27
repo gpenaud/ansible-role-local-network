@@ -1,0 +1,22 @@
+---
+name: needys-lxc
+bridged_on: wlp58s0
+cache_size: 0
+
+subnet: 10.104.0.0
+router: 10.104.0.1
+netmask: 255.255.255.0
+domain: needys.lxc
+
+dns_server: 10.104.0.1
+dns_cnames:
+  services.needys.lxc:
+  - www.needys.lxc
+  - prometheus.needys.lxc
+  - grafana.needys.lxc
+  - envoy.needys.lxc
+  - elasticsearch.needys.lxc
+  - kibana.needys.lxc
+
+dhcp_leasefile_path: /tmp/dhcp-leases-needys-lxc
+dhcp_range: 10.104.0.2,10.104.0.254,24h

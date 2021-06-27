@@ -1,0 +1,9 @@
+auto needys-lxc
+iface needys-lxc inet static
+  bridge_ports none
+  bridge_fd 0
+  bridge_maxwait 0
+  address 10.102.0.1
+  netmask 255.255.255.0
+  down iptables -t nat -D POSTROUTING -s 10.102.0.0/24 -o wlp58s0 -j MASQUERADE
+  up   iptables -t nat -A POSTROUTING -s 10.102.0.0/24 -o wlp58s0 -j MASQUERADE

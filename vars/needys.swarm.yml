@@ -1,0 +1,21 @@
+---
+name: needys-swarm
+bridged_on: wlp58s0
+
+subnet: 10.105.0.0
+router: 10.105.0.1
+netmask: 255.255.255.0
+domain: needys.swarm
+
+dns_server: 10.105.0.1
+dns_cnames:
+  services.needys.swarm:
+  - www.needys.swarm
+  - prometheus.needys.swarm
+  - grafana.needys.swarm
+  - envoy.needys.swarm
+  - elasticsearch.needys.swarm
+  - kibana.needys.swarm
+
+dhcp_leasefile_path: /tmp/dhcp-leases-needys-swarm
+dhcp_range: 10.105.0.2,10.105.0.254,24h

@@ -1,0 +1,21 @@
+---
+name: needys-k8s
+bridged_on: wlp58s0
+
+subnet: 10.103.0.0
+router: 10.103.0.1
+netmask: 255.255.255.0
+domain: needys.k8s
+
+dns_server: 10.103.0.1
+dns_cnames:
+  services.needys.k8s:
+  - www.needys.k8s
+  - prometheus.needys.k8s
+  - grafana.needys.k8s
+  - envoy.needys.k8s
+  - elasticsearch.needys.k8s
+  - kibana.needys.k8s
+
+dhcp_leasefile_path: /tmp/dhcp-leases-needys-k8s
+dhcp_range: 10.103.0.2,10.103.0.254,24h

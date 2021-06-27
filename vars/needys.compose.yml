@@ -1,0 +1,21 @@
+---
+name: needys-compose
+bridged_on: wlp58s0
+
+subnet: 10.102.0.0
+router: 10.102.0.1
+netmask: 255.255.255.0
+domain: needys.compose
+
+dns_server: 10.102.0.1
+dns_cnames:
+  services.needys.compose:
+  - www.needys.compose
+  - prometheus.needys.compose
+  - grafana.needys.compose
+  - envoy.needys.compose
+  - elasticsearch.needys.compose
+  - kibana.needys.compose
+
+dhcp_leasefile_path: /tmp/dhcp-leases-needys-compose
+dhcp_range: 10.102.0.2,10.102.0.254,24h

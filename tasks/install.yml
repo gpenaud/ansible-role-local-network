@@ -1,0 +1,41 @@
+
+- name: include interfaces declared in vars/ directory
+  include_vars:
+    file: "{{ item.path }}"
+    name: "interface_{{ (item.path | splitext)[0] | replace('.','_') }}"
+  with_filetree: vars/
+
+- name: format interfaces list variables
+  set_fact:
+    interfaces: "{{ interfaces | default({}) | combine({item: lookup('vars', item)}) }}"
+  loop: "{{ hostvars[inventory_hostname].keys() | select('match', '^.*interface_.*$') | list }}"
+
+# - name: set-up dnsmasq
+#   include: dnsmasq.yml
+#
+# - name: set-up network interfaces configuration
+#   include: network.yml
+
+- name: template out proxy configuration for dnsmasq
+  become: yes
+  template:
+    src: dnsmasq/proxy.conf.j2
+    dest: /etc/dnsmasq.d/_proxy.conf
+    owner: root
+    group: root
+  notify:
+  - restart dnsmasq proxy
+
+- name: template out interfaces configuration for dnsmasq
+  become: yes
+  loop: "{{ interfaces | dict2items }}"
+  template:
+    src: dnsmasq/interface.conf.j2
+    dest: /etc/dnsmasq.d/{{ item.value.name }}.conf
+    owner: root
+    group: root
+  register: dnsmasq_instances
+  notify:
+  - restart dnsmasq instances
+
+- meta: flush_handlers
