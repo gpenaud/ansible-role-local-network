@@ -12,3 +12,9 @@
   systemd:
     name: dnsmasq@{{ item }}
     state: restarted
+
+- name: restart networking
+  become: yes
+  systemd:
+    name: networking
+    state: restarted

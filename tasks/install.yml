@@ -4,11 +4,13 @@
     file: "{{ item.path }}"
     name: "interface_{{ (item.path | splitext)[0] | replace('.','_') }}"
   with_filetree: vars/
+  tags: always
 
 - name: format interfaces list variables
   set_fact:
     interfaces: "{{ interfaces | default({}) | combine({item: lookup('vars', item)}) }}"
   loop: "{{ hostvars[inventory_hostname].keys() | select('match', '^.*interface_.*$') | list }}"
+  tags: always
 
 # - name: set-up dnsmasq
 #   include: dnsmasq.yml
@@ -39,3 +41,35 @@
   - restart dnsmasq instances
 
 - meta: flush_handlers
+
+- name: ensure resolv.conf is correctly configured (to 127.0.0.1)
+  become: yes
+  copy:
+    src: files/resolv.conf
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+  tags: [interface]
+
+- name: configure physical interfaces
+  become: yes
+  template:
+    src: interfaces/physical.j2
+    dest: /etc/network/interfaces
+    owner: root
+    group: root
+  notify:
+  - restart networking
+  tags: [interface]
+
+- name: template out bridged interface configuration for networking
+  become: yes
+  loop: "{{ interfaces | dict2items }}"
+  template:
+    src: interfaces/bridged.j2
+    dest: /etc/network/interfaces.d/{{ item.value.name }}
+    owner: root
+    group: root
+  notify:
+  - restart networking
+  tags: [interface]

@@ -6,7 +6,7 @@ bind-dynamic
 
 domain={{ interface.domain }}
 {% for cname_key, cname_values in interface.dns_cnames.items() %}
-cname={{ cname_key }},{{ cname_values | join(",") }}
+cname={{ cname_values | join(",") }},{{ cname_key }}
 {% endfor %}
 cache-size={{ interface.cache_size | default(0) }}
 

@@ -2,7 +2,6 @@
 name: needys-swarm
 bridged_on: wlp58s0
 
-subnet: 10.105.0.0
 router: 10.105.0.1
 netmask: 255.255.255.0
 domain: needys.swarm

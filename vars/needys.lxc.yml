@@ -3,7 +3,6 @@ name: needys-lxc
 bridged_on: wlp58s0
 cache_size: 0
 
-subnet: 10.104.0.0
 router: 10.104.0.1
 netmask: 255.255.255.0
 domain: needys.lxc

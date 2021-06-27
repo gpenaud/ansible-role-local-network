@@ -2,7 +2,6 @@
 name: needys-compose
 bridged_on: wlp58s0
 
-subnet: 10.102.0.0
 router: 10.102.0.1
 netmask: 255.255.255.0
 domain: needys.compose

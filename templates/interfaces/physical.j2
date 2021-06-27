@@ -1,7 +1,9 @@
 auto lo
 iface lo inet loopback
 
-auto wlp58s0
-iface wlp58s0 inet dhcp
+{% for interface in local_network_interfaces %}
+auto {{ interface }}
+iface {{ interface }} inet dhcp
+{% endfor %}
 
 source /etc/network/interfaces.d/*
